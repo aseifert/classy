@@ -84,7 +84,7 @@ def parse_args(commands: dict):
     return parser.parse_args()
 
 
-def install_autocomplete():
+def install_autocomplete(shell: str = "bash"):
     import os
 
     prefix = os.getenv("CONDA_PREFIX")
@@ -103,7 +103,8 @@ def install_autocomplete():
         return
 
     path = Path(prefix)
-    script_path = path / "etc/conda/activate.d/classy-complete.sh"
+    ext = "fish" if shell == "fish" else "sh"
+    script_path = path / f"etc/conda/activate.d/classy-complete.{ext}"
     if script_path.exists():
         print("Autocomplete already installed! Exiting...")
         return
@@ -114,7 +115,11 @@ def install_autocomplete():
     # currently works with bash and zsh (if bashcompinit is enabled!)
     # see https://github.com/kislyuk/argcomplete#activating-global-completion for more info
     with script_path.open("w") as f:
-        s = 'eval "$(register-python-argcomplete classy)"'
+        s = (
+            "register-python-argcomplete --shell fish classy | source"
+            if shell == "fish"
+            else 'eval "$(register-python-argcomplete classy)"'
+        )
         print(s, file=f)
 
     print("Autocompletion installed, enjoy classy! :)")
