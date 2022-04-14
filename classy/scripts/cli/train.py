@@ -554,7 +554,7 @@ def main(args):
                 )
             )
 
-        # bid-dataset option
+        # big-dataset option
         if args.big_dataset:
             logger.info(
                 "The user selected the --big-dataset option. "

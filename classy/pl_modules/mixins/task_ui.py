@@ -155,7 +155,7 @@ try:
             st.markdown(
                 f"""
                     * **task**: Token Classification
-                    * **input**: Space-separeted list of tokens
+                    * **input**: Space-separated list of tokens
                 """
             )
 
@@ -168,7 +168,7 @@ try:
                 index=0,
             )
             input_text = st.text_area(
-                "Space-separeted list of tokens to classify", placeholder
+                "Space-separated list of tokens to classify", placeholder
             )
             if st.button("Classify", key="classify"):
                 sample = json.dumps({"tokens": input_text.split(" ")})
